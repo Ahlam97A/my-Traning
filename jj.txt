@@ -1,0 +1,43 @@
+import React from 'react';
+
+import './App.css';
+
+class App extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      tweet: '',
+      image: false,
+    }
+    this.maxChar = 300;
+  }
+
+
+  onTextChange = (e) => {
+    this.setState({ tweet: e.target.value })
+  }
+
+  toggleImage = () => {
+    this.setState({ image: !this.state.image })
+  }
+
+  render() {
+
+    let { tweet, image } = this.state
+    let charCount = tweet.length + (image ? 50 : 0)
+    let canTweet = charCount <= this.maxChar
+    let color = canTweet ? 'black' : 'red'
+    return (
+      <div>
+        <textarea id='text' onChange={this.onTextChange} rows="6" cols="50" style={{ color: color }}></textarea>
+        <button id="tweet" disabled={!canTweet}>Tweet!</button>
+        <button onClick={this.toggleImage}>{image ? "Remove Image" : "Upload Image"}</button>
+        <p style={{ color: color }}>{charCount}/300</p>
+      </div>
+    )
+
+  }
+}
+
+export default App;
